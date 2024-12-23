@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coin Flip by Name</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        input, button {
+            margin: 5px;
+            padding: 10px;
+        }
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Flip a Coin by Name</h1>
+    <input type="text" id="nameInput" placeholder="Enter name">
+    <button onclick="addParticipant()">Add Name</button>
+    <button onclick="flipCoins()">Flip Coins</button>
+
+    <h2>Participants</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Result</th>
+            </tr>
+        </thead>
+        <tbody id="participantsTable"></tbody>
+    </table>
+
+    <script>
+        const participants = [];
+
+        function addParticipant() {
+            const nameInput = document.getElementById('nameInput');
+            const name = nameInput.value.trim();
+            if (name) {
+                participants.push({ name, result: null });
+                nameInput.value = '';
+                updateTable();
+            }
+        }
+
+        function flipCoins() {
+            participants.forEach(participant => {
+                participant.result = Math.random() < 0.5 ? 'Heads' : 'Tails';
+            });
+            updateTable();
+        }
+
+        function updateTable() {
+            const tableBody = document.getElementById('participantsTable');
+            tableBody.innerHTML = '';
+            participants.forEach(({ name, result }) => {
+                const row = `<tr><td>${name}</td><td>${result || '-'}</td></tr>`;
+                tableBody.innerHTML += row;
+            });
+        }
+    </script>
+</body>
+</html>
